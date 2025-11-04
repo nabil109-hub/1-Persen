@@ -95,12 +95,12 @@
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <a href="HalamanUtama.html" class="flex items-center space-x-2">
+                <a href="index.html" class="flex items-center space-x-2">
                     <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 34" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span class="text-xl font-bold text-white">1% Lebih Baik</span>
                 </a>
                 <nav class="hidden md:flex md:items-center md:space-x-8">
-                    <a href="HalamanUtama.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
+                    <a href="index.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
                     <a href="BerandaBisnis.html" class="text-slate-300 hover:text-sky-400 transition">Bisnis</a>
                     <a href="BerandaKarir.html" class="text-slate-300 hover:text-sky-400 transition">Karir</a>
                     <a href="BerandaProduktif.html" class="text-white font-bold bg-slate-700/50 px-3 py-2 rounded-lg">Produktif</a>
@@ -117,7 +117,7 @@
             <button id="close-mobile-menu" class="text-white"><i data-lucide="x"></i></button>
         </div>
         <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
-            <a href="HalamanUtama.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
+            <a href="index.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
             <a href="BerandaBisnis.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Bisnis</a>
             <a href="BerandaKarir.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Karir</a>
             <a href="BerandaProduktif.html" class="text-2xl text-white font-bold">Produktif</a>
@@ -318,7 +318,7 @@
     import { getAuth } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
     // ** Tambahkan Inisialisasi Firebase App (jika belum ada dari HalamanUtama) **
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    const firebaseConfig = { // Salin dari HalamanUtama.html
+    const firebaseConfig = { // Salin dari index.html
           apiKey: "AIzaSyBZpVN-dFVngkxe6obg3hCeKyPniJb0__Y",
           authDomain: "project-1-lebih-baik.firebaseapp.com",
           projectId: "project-1-lebih-baik",
@@ -360,7 +360,7 @@
              el.startSession.innerHTML = `
                  <h1 class="text-3xl md:text-5xl font-black text-white mb-4">Akses Ditolak</h1>
                  <p class="text-lg text-slate-400 mb-10">Anda harus login terlebih dahulu di Halaman Utama untuk menggunakan fitur ini.</p>
-                 <a href="HalamanUtama.html" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-10 rounded-lg text-xl">
+                 <a href="index.html" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-10 rounded-lg text-xl">
                      Ke Halaman Utama
                  </a>
              `;
@@ -378,7 +378,7 @@
             console.error("Gagal mendapatkan token:", error);
             alert("Sesi Anda mungkin berakhir. Silakan login ulang.");
             sessionStorage.removeItem('firebaseIdToken');
-            window.location.href = 'HalamanUtama.html';
+            window.location.href = 'index.html';
             return null;
         }
     }
@@ -638,7 +638,7 @@
              else if (error.message.includes("401") || error.message.includes("403")) {
                  alert("Sesi Anda berakhir. Silakan login ulang.");
                  sessionStorage.removeItem('firebaseIdToken');
-                 window.location.href = 'HalamanUtama.html';
+                 window.location.href = 'index.html';
              } else {
                 el.todoList.innerHTML = `<li class="text-red-400 italic">Gagal memuat data dari server. ${error.message}</li>`;
              }
@@ -814,7 +814,7 @@
                  if (response.status === 401 || response.status === 403) {
                      alert("Sesi Anda berakhir. Silakan login ulang.");
                      sessionStorage.removeItem('firebaseIdToken');
-                     window.location.href = 'HalamanUtama.html';
+                     window.location.href = 'index.html';
                      return; 
                  }
                 throw new Error(`HTTP error! status: ${response.status}`);
