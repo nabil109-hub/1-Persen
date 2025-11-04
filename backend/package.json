@@ -1,16 +1,11 @@
 {
-  "name": "backend",
+  "name": "project-1-persen-lebih-baik",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "npx prisma generate && node server.js",
-    "dev": "npx nodemon server.js",
-    "test": "cross-env DATABASE_URL=\"postgresql://neondb_owner:npg_9eTl5CHjmJKc@ep-lucky-grass-a1abkxaa-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require\" npx prisma migrate deploy && jest --runInBand"
+    "start": "node backend/server.js",
+    "build": "npx prisma generate --schema=./backend/prisma/schema.prisma"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.18.0",
     "axios": "^1.12.2",
@@ -25,10 +20,5 @@
     "pino": "^10.1.0",
     "pino-pretty": "^13.1.2",
     "prisma": "^6.18.0"
-  },
-  "devDependencies": {
-    "cross-env": "^10.1.0",
-    "jest": "^30.2.0",
-    "supertest": "^7.1.4"
   }
 }

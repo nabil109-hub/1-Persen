@@ -8,7 +8,7 @@
 
 # Kunci Google Service Account (SANGAT RAHASIA)
 # Path ini disesuaikan dengan screenshot Anda, di mana file ini ada di dalam folder 'backend'
-backend/serviceAccountKey.json
+backend/serviceAccountkey.json
 
 
 # ---------------------------------------------------------------------------
