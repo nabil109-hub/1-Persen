@@ -61,7 +61,7 @@
             display: none;
         }
 
-        /* --- (BARU) Animasi Pop-up Maskot --- */
+        /* --- Animasi Pop-up Maskot --- */
         @keyframes pop-in {
             from {
                 opacity: 0;
@@ -72,7 +72,6 @@
                 transform: translateY(0) scale(1);
             }
         }
-        /* Terapkan animasi saat kelas .mascot-pop-in ditambahkan */
         .mascot-pop-in {
             animation: pop-in 0.5s ease-out forwards;
         }
@@ -260,8 +259,25 @@
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             <h3 id="modal-title" class="text-2xl font-bold text-white text-center mb-6">Selamat Datang</h3>
+            
             <div class="space-y-4">
                 
+                <button id="google-login-button" class="w-full bg-white text-slate-900 font-semibold py-2.5 px-4 rounded-lg hover:bg-slate-200 transition-colors flex items-center justify-center space-x-2">
+                    <svg class="w-5 h-5" viewBox="0 0 48 48">
+                        <path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l8.31 6.42C12.92 13.46 18.06 9.5 24 9.5z"></path>
+                        <path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.42-4.55H24v8.61h12.94c-.57 2.97-2.23 5.47-4.81 7.28l7.69 5.95C44.63 38.3 46.98 31.91 46.98 24.55z"></path>
+                        <path fill="#FBBC05" d="M10.87 28.64c-.76-2.28-1.19-4.75-1.19-7.22s.43-4.94 1.2-7.22l-8.31-6.42C1.53 11.4 0 17.53 0 24.01c0 6.48 1.53 12.61 4.22 17.65l8.31-6.42-.66.01z"></path>
+                        <path fill="#EA4335" d="M24 48.01c6.48 0 11.93-2.13 15.84-5.72l-7.69-5.95c-2.11 1.41-4.79 2.23-7.91 2.23-5.94 0-11.08-3.96-12.92-9.3l-8.31 6.42C6.51 42.62 14.62 48.01 24 48.01z"></path>
+                        <path fill="none" d="M0 0h48v48H0z"></path>
+                    </svg>
+                    <span>Lanjutkan dengan Google</span>
+                </button>
+
+                <div class="relative flex items-center pt-2 pb-1">
+                    <div class="flex-grow border-t border-slate-600"></div>
+                    <span class="flex-shrink mx-4 text-slate-400 text-sm">ATAU</span>
+                    <div class="flex-grow border-t border-slate-600"></div>
+                </div>
                 <div id="signup-fields" class="hidden space-y-4">
                     <div>
                         <label for="nama-input" class="block text-sm font-medium text-slate-300 mb-1">Nama Lengkap</label>
@@ -306,7 +322,6 @@
             </div>
         </div>
     </div>
-
     <div id="info-modal" class="modal-overlay hidden">
         <div class="modal-box w-full max-w-sm text-center">
             <p id="info-modal-message" class="text-slate-200 text-lg mb-6">Anda harus login dulu.</p>
@@ -321,11 +336,9 @@
             <button id="close-mascot" class="absolute top-2 right-2 text-slate-400 hover:text-slate-900 p-0.5">
                 <i data-lucide="x" class="w-4 h-4"></i>
             </button>
-            
             <p class="text-sm font-semibold pr-4">
                 Hai! Selamat Datang Di 1% Lebih Baik. Blue akan menemani kamu jadi lebih baik.
             </p>
-
             <div class="absolute left-1/2 -bottom-2 transform -translate-x-1/2">
                 <div class="w-0 h-0 
                     border-l-[10px] border-l-transparent
@@ -334,33 +347,27 @@
                 </div>
             </div>
         </div>
-
         <img src="mascot-blue.png.png" alt="Maskot Blue" class="w-32 h-32 ml-auto">
     </div>
     <script type="module">
         // ===== MULAI KODE <script type="module"> =====
 
-        // --- (BARU) Logika Mascot Selamat Datang ---
+        // --- Logika Mascot Selamat Datang ---
         const mascotWelcome = document.getElementById('mascot-welcome');
         const closeMascot = document.getElementById('close-mascot');
 
         if (mascotWelcome && closeMascot) {
-            // Cek localStorage. Jika belum pernah ditutup, tampilkan.
             if (localStorage.getItem('welcomeMascotClosed') !== 'true') {
-                // Tampilkan dengan delay 1 detik + animasi
                 setTimeout(() => {
                     mascotWelcome.classList.remove('hidden');
-                    mascotWelcome.classList.add('mascot-pop-in'); // Tambahkan kelas animasi
-                }, 1000); // Delay 1 detik
+                    mascotWelcome.classList.add('mascot-pop-in'); 
+                }, 1000); 
             }
-
-            // Tambahkan event listener untuk tombol close
             closeMascot.addEventListener('click', () => {
-                mascotWelcome.style.display = 'none'; // Sembunyikan langsung
-                localStorage.setItem('welcomeMascotClosed', 'true'); // Simpan pilihan
+                mascotWelcome.style.display = 'none'; 
+                localStorage.setItem('welcomeMascotClosed', 'true'); 
             });
         }
-        // --- (AKHIR BARU) ---
     
         // Import fungsi Firebase (Versi 12.4.0)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
@@ -370,7 +377,9 @@
             signInWithEmailAndPassword, 
             createUserWithEmailAndPassword, 
             signOut,
-            signInAnonymously 
+            signInAnonymously,
+            GoogleAuthProvider,  // <-- (BARU) TAMBAHKAN INI
+            signInWithPopup      // <-- (BARU) TAMBAHKAN INI
         } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
         import { 
             getFirestore, 
@@ -393,16 +402,15 @@
         const auth = getAuth(app);
         const db = getFirestore(app); 
         
+        // --- (BARU) Inisialisasi Google Provider ---
+        const googleProvider = new GoogleAuthProvider();
+        // ------------------------------------------
+        
         const BACKEND_URL = "";
 
-        // Simple console logger fallback
-        const logger = { 
-            info: console.log, 
-            error: console.error, 
-            warn: console.warn 
-        }; 
+        const logger = { info: console.log, error: console.error, warn: console.warn }; 
 
-        // --- Elemen UI (HANYA UNTUK AUTENTIKASI) ---
+        // --- Elemen UI (AUTENTIKASI) ---
         const loginButton = document.getElementById('login-button');
         const logoutButton = document.getElementById('logout-button');
         const mobileLoginButton = document.getElementById('mobile-login-button');
@@ -428,8 +436,12 @@
         const infoModalMessage = document.getElementById('info-modal-message');
         const infoModalClose = document.getElementById('info-modal-close');
         const protectedLinks = document.querySelectorAll('.protected-link');
+        
+        // --- (BARU) Elemen Tombol Google ---
+        const googleLoginButton = document.getElementById('google-login-button');
+        // ----------------------------------
 
-        // --- Fungsi Modal ---
+        // --- Fungsi Modal (Tidak Berubah) ---
         function showLoginModal() {
             loginModal.classList.remove('hidden');
             lucide.createIcons();
@@ -482,26 +494,37 @@
         toggleToSignup.addEventListener('click', switchToSignupMode);
         toggleToLogin.addEventListener('click', switchToLoginMode);
 
-        // --- FUNGSI BARU UNTUK SINKRONISASI KE BACKEND (VERSI BARU DENGAN REFRESH TOKEN) ---
+        // --- (BARU) Event Listener Google Login ---
+        googleLoginButton.addEventListener('click', async () => {
+            authErrorMessage.classList.add('hidden'); // Sembunyikan error lama
+            try {
+                // Ini akan membuka popup.
+                // onAuthStateChanged akan otomatis terpicu setelah sukses.
+                await signInWithPopup(auth, googleProvider);
+            } catch (error) {
+                console.error('Google login error:', error.message);
+                authErrorMessage.textContent = 'Gagal login dengan Google. Coba lagi.';
+                authErrorMessage.classList.remove('hidden');
+            }
+        });
+        // ----------------------------------------
+
+        // --- Fungsi Sinkronisasi (Tidak Berubah, sudah mendukung display Name) ---
         async function syncUserWithBackend(user, nama) {
             try {
-                // 1. DAPATKAN TOKEN BARU SETIAP SAAT DENGAN forceRefresh = true
-                const token = await user.getIdToken(true); // Tambahkan 'true' di sini!
-
-                // 2. Simpan token baru di sessionStorage
+                const token = await user.getIdToken(true); 
                 sessionStorage.setItem('firebaseIdToken', token);
                 logger.info('Token ID Firebase baru disimpan ke sessionStorage.'); 
 
-                // 3. Panggil API /auth/sync kita
                 const response = await fetch(`${BACKEND_URL}/api/v1/auth/sync`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // Kirim token baru
+                        'Authorization': `Bearer ${token}` 
                     },
                     body: JSON.stringify({
                         email: user.email,
-                        nama: nama || user.displayName || 'User Baru'
+                        nama: nama || user.displayName || 'User Baru' // user.displayName akan diisi oleh Google
                     })
                 });
 
@@ -517,34 +540,32 @@
         }
 
 
-        // --- Logika Autentikasi (DIMODIFIKASI DENGAN REFRESH TOKEN) ---
-        // 1. Listener Status Auth (VERSI BARU)
+        // --- Logika Autentikasi ---
+        // 1. Listener Status Auth (Tidak Berubah)
         onAuthStateChanged(auth, (user) => {
             if (user && !user.isAnonymous) {
-                // User login dengan email/password
                 loginButton.classList.add('hidden');
                 mobileLoginButton.classList.add('hidden');
                 logoutButton.classList.remove('hidden');
                 mobileLogoutButton.classList.remove('hidden');
                 hideLoginModal();
 
-                // Panggil fungsi sinkronisasi (seperti sebelumnya)
+                // (PENTING) Ambil nama dari user.displayName jika login via Google
+                // Jika daftar manual, 'namaInput.value' akan dipakai
                 const currentNama = namaInput ? namaInput.value : null;
                 syncUserWithBackend(user, currentNama);
 
             } else {
-                // User logout atau anonim
                 loginButton.classList.remove('hidden');
                 mobileLoginButton.classList.remove('hidden');
                 logoutButton.classList.add('hidden');
                 mobileLogoutButton.classList.add('hidden');
-                // Hapus token saat logout
                 sessionStorage.removeItem('firebaseIdToken');
                 logger.info('User logout, token dihapus dari sessionStorage.'); 
             }
         });
 
-        // 2. Proses Login (Tidak Berubah)
+        // 2. Proses Login Email (Tidak Berubah)
         loginSubmitButton.addEventListener('click', async () => {
             const email = emailInput.value;
             const password = passwordInput.value;
@@ -553,7 +574,6 @@
                 authErrorMessage.classList.remove('hidden');
                 return;
             }
-            
             try {
                 await signInWithEmailAndPassword(auth, email, password);
             } catch (error) {
@@ -563,7 +583,7 @@
             }
         });
 
-        // 3. Proses Daftar (Tidak Berubah)
+        // 3. Proses Daftar Email (Tidak Berubah)
         signupSubmitButton.addEventListener('click', async () => {
             const nama = namaInput.value.trim();
             const email = emailInput.value.trim();
@@ -650,7 +670,7 @@
             }
         })();
 
-        // Tambahkan listener untuk refresh token secara berkala (opsional tapi bagus)
+        // 7. Refresh Token Berkala (Tidak Berubah)
         setInterval(async () => {
             const user = auth.currentUser;
             if (user && !user.isAnonymous) {
@@ -690,7 +710,7 @@
         const animatedSections = document.querySelectorAll('.animated-section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
+                if (entry.isInteracting) {
                     entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
