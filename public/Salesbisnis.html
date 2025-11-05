@@ -57,38 +57,8 @@
 </head>
 <body class="text-slate-200">
 
-    <header class="bg-slate-900/80 backdrop-blur-sm shadow-lg fixed top-0 z-50 w-full">
-        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <a href="index.html" class="flex items-center space-x-2">
-                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 34" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="text-xl font-bold text-white">1% Lebih Baik</span>
-                </a>
-                <nav class="hidden md:flex md:items-center md:space-x-8">
-                    <a href="index.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-                    <a href="BerandaBisnis.html" class="text-white font-bold bg-slate-700/50 px-3 py-2 rounded-lg">Bisnis</a>
-                    <a href="BerandaKarir.html" class="text-slate-300 hover:text-sky-400 transition">Karir</a>
-                    <a href="BerandaProduktif.html" class="text-slate-300 hover:text-sky-400 transition">Produktif</a>
-                </nav>
-                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white"><i data-lucide="menu"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <div id="nav-placeholder"></div>
 
-     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-40">
-        <div class="flex justify-end p-4">
-            <button id="close-mobile-menu" class="text-white"><i data-lucide="x"></i></button>
-        </div>
-        <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
-            <a href="index.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-            <a href="BerandaBisnis.html" class="text-2xl text-white font-bold">Bisnis</a>
-            <a href="BerandaKarir.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Karir</a>
-            <a href="BerandaProduktif.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Produktif</a>
-        </div>
-    </div>
-    
     <div class="pt-20">
         <aside id="syllabus-panel" class="w-80 bg-slate-900/80 backdrop-blur-md border-r border-slate-700 h-screen fixed top-0 left-0 pt-20 flex-shrink-0 z-40 overflow-y-auto">
              <div class="p-6">
@@ -257,43 +227,21 @@
         </div>
     </div>
 
+<script src="layout.js"></script>
 
-<script type="module"> // *** UBAH MENJADI type="module" ***
+<script type="module">
 // ===== MULAI SCRIPT BARU =====
 
-// --- Impor Firebase (BARU) ---
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-const firebaseConfig = { // Salin dari index.html
-      apiKey: "AIzaSyBZpVN-dFVngkxe6obg3hCeKyPniJb0__Y",
-      authDomain: "project-1-lebih-baik.firebaseapp.com",
-      projectId: "project-1-lebih-baik",
-      storageBucket: "project-1-lebih-baik.firebasestorage.app",
-      messagingSenderId: "153004966709",
-      appId: "1:153004966709:web:9f98e0ba16ae35b18ec27c"
-};
-let app;
-try {
-    app = initializeApp(firebaseConfig);
-} catch (e) {
-    // App mungkin sudah diinisialisasi
-    if (window.firebase?.apps?.length) { // Cek apakah 'firebase' ada di window
-        app = window.firebase.app();
-    } else {
-         console.error("Critical Firebase Initialization Error:", e);
-    }
-}
-const auth = getAuth(app); // Dapatkan instance auth
-// --- Akhir Impor Firebase ---
+// --- (BARU) Impor dari modul auth terpusat ---
+import { getAuthToken, getAuthHeaders } from './auth.js';
 
+// --- (DIHAPUS) Blok Impor Firebase lama ---
+// --- (DIHAPUS) Blok Inisialisasi app/auth lama ---
 
 lucide.createIcons();
 
 const el = {
-    // UI Elements
-    mobileMenu: document.getElementById('mobile-menu'),
-    mobileMenuButton: document.getElementById('mobile-menu-button'),
-    closeMobileMenu: document.getElementById('close-mobile-menu'),
+    // (DIHAPUS) mobileMenu, mobileMenuButton, closeMobileMenu
     syllabusPanel: document.getElementById('syllabus-panel'),
     openSyllabusButton: document.getElementById('open-syllabus-button'),
     closeSyllabusButton: document.getElementById('close-syllabus-button'),
@@ -335,40 +283,10 @@ let notes = {}; // Akan diisi oleh API
 const BACKEND_URL = "";
 let saveTimer; // Timer untuk debounce
 
-async function getAuthToken() {
-    await auth.authStateReady(); 
-    const user = auth.currentUser;
-    if (!user || user.isAnonymous) {
-        alert("Anda harus login dulu untuk mengakses materi ini.");
-        window.location.href = "index.html";
-        return null;
-    }
-    try {
-        const token = await user.getIdToken(true); // Paksa refresh
-        sessionStorage.setItem('firebaseIdToken', token);
-        return token;
-    } catch (error) {
-        console.error("Gagal mendapatkan token:", error);
-        sessionStorage.removeItem('firebaseIdToken');
-        window.location.href = 'index.html';
-        return null;
-    }
-}
-
-async function getAuthHeaders() {
-    const token = await getAuthToken();
-    if (!token) {
-        throw new Error("Token tidak tersedia");
-    }
-    return {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    };
-}
-// --- Akhir Logika Auth & API ---
+// --- (DIHAPUS) Fungsi getAuthToken() dan getAuthHeaders() lokal lama ---
 
 
-// --- UI Interaction Functions (KODE ASLI) ---
+// --- UI Interaction Functions (TETAP) ---
 function openSyllabus() {
     el.syllabusPanel.classList.add('open');
     if (window.innerWidth >= 768) { 
@@ -396,7 +314,7 @@ function handleResize() {
     }
 }
 
-// --- Academy Core Functions (KODE ASLI) ---
+// --- Academy Core Functions (TETAP) ---
 function initializeSyllabus() {
     let moduleIndex = 0;
     syllabusStructure.forEach(chapter => {
@@ -487,11 +405,11 @@ function goToModule(index) {
     el.contentDisplayMaterial.innerHTML = module.element.innerHTML + createCaseStudyTabs(module.id);
     setupTabEvents(el.contentDisplayMaterial, 'case-study-tab-button', 'tab-');
     
-    el.notesTextarea.value = notes[module.id] || ''; // Mengisi catatan dari data API
+    el.notesTextarea.value = notes[module.id] || ''; 
     completedModules.add(module.id);
     
     updateUI();
-    saveProgress(); // Simpan progres (index & completed) ke localStorage
+    saveProgress(); 
 }
 function updateUI() {
     document.querySelectorAll('.syllabus-item').forEach((item, idx) => {
@@ -514,32 +432,28 @@ function updateUI() {
     el.nextButton.disabled = currentModuleIndex === allModules.length - 1;
 }
 
-// --- Data Persistence (DIMODIFIKASI) ---
-// Hanya menyimpan progres non-catatan ke localStorage
+// --- Data Persistence (TETAP) ---
 function saveProgress() {
     localStorage.setItem('salesAcademyProgress', JSON.stringify({
         currentModuleIndex,
         completed: Array.from(completedModules),
-        // 'notes' dihapus dari sini, akan disimpan ke API
     }));
 }
 
-// Hanya memuat progres non-catatan dari localStorage
 function loadProgress() {
     const saved = localStorage.getItem('salesAcademyProgress');
     if (saved) {
         const progress = JSON.parse(saved);
         currentModuleIndex = progress.currentModuleIndex || 0;
         completedModules = new Set(progress.completed || []);
-        // 'notes' dihapus dari sini, akan diambil dari API
     }
 }
 
-// (BARU) Memuat catatan dari API
+// (TETAP) Memuat catatan dari API
 async function loadNotesFromAPI() {
     console.log("Mencoba memuat catatan dari API...");
     try {
-        const headers = await getAuthHeaders();
+        const headers = await getAuthHeaders(); // Menggunakan fungsi impor
         const response = await fetch(`${BACKEND_URL}/api/v1/sales-notes`, {
             headers: headers
         });
@@ -552,21 +466,21 @@ async function loadNotesFromAPI() {
             }
             throw new Error(`Gagal memuat catatan: ${response.statusText}`);
         }
-        notes = await response.json(); // Mengisi variabel 'notes' global
+        notes = await response.json(); 
         console.log("Catatan berhasil dimuat:", notes);
     } catch (error) {
         console.error("Error memuat catatan:", error);
-        if (!(error instanceof Error && error.message.includes("Token tidak tersedia"))) { // Hindari error dobel
+        if (!(error instanceof Error && error.message.includes("Token tidak tersedia"))) { 
              alert("Gagal memuat catatan Anda dari server."); 
         }
     }
 }
 
-// (BARU) Menyimpan catatan ke API (dengan debounce)
+// (TETAP) Menyimpan catatan ke API
 async function saveNoteToAPI(moduleId, content) {
     console.log(`Menyimpan catatan untuk modul ${moduleId}...`);
     try {
-        const headers = await getAuthHeaders();
+        const headers = await getAuthHeaders(); // Menggunakan fungsi impor
         await fetch(`${BACKEND_URL}/api/v1/sales-notes`, {
             method: 'POST',
             headers: headers,
@@ -582,7 +496,7 @@ async function saveNoteToAPI(moduleId, content) {
 }
 
 
-// --- Search Functionality (KODE ASLI) ---
+// --- Search Functionality (TETAP) ---
 function handleSearch() {
     const query = el.searchInput.value.toLowerCase().trim();
     if (query === '') {
@@ -607,8 +521,7 @@ function handleSearch() {
 }
 
 // --- Event Listeners (DIMODIFIKASI) ---
-el.mobileMenuButton.addEventListener('click', () => el.mobileMenu.classList.remove('hidden'));
-el.closeMobileMenu.addEventListener('click', () => el.mobileMenu.classList.add('hidden'));
+// (DIHAPUS) Listener mobileMenuButton dan closeMobileMenu
 el.openSyllabusButton.addEventListener('click', (e) => { e.stopPropagation(); openSyllabus(); });
 el.closeSyllabusButton.addEventListener('click', closeSyllabus);
 document.body.addEventListener('click', (e) => {
@@ -618,16 +531,14 @@ document.body.addEventListener('click', (e) => {
 });
 window.addEventListener('resize', handleResize);
 
-// (DIMODIFIKASI) Tombol Mulai Belajar sekarang juga memuat catatan dari API
 el.startLearningButton.addEventListener('click', async () => {
     try {
-        await loadNotesFromAPI(); // Muat catatan dari API
+        await loadNotesFromAPI(); 
         el.introView.classList.add('hidden');
         el.academyView.classList.remove('hidden');
-        goToModule(currentModuleIndex); // Baru tampilkan modul
+        goToModule(currentModuleIndex); 
     } catch (error) {
          console.error("Gagal memulai pembelajaran:", error);
-         // Penanganan error (misalnya token tidak valid) sudah ada di dalam loadNotesFromAPI
     }
 });
 
@@ -644,35 +555,29 @@ el.mainTabButtons.forEach(button => {
     });
 });
 
-// (DIMODIFIKASI) Listener input catatan sekarang memanggil API dengan debounce
 el.notesTextarea.addEventListener('input', () => {
     const currentModuleId = allModules[currentModuleIndex].id;
     const content = el.notesTextarea.value;
     
-    // Simpan ke state lokal (agar UI responsif)
     notes[currentModuleId] = content;
     
-    // Hapus timer lama jika ada
     clearTimeout(saveTimer);
     
-    // Atur timer baru untuk menyimpan ke API setelah 1 detik
     saveTimer = setTimeout(() => {
         saveNoteToAPI(currentModuleId, content);
-    }, 1000); // 1 detik debounce
+    }, 1000); 
 });
 
-// --- Initialization ---
-document.addEventListener('DOMContentLoaded', async () => { // Jadikan async
+// --- Initialization (DIMODIFIKASI) ---
+document.addEventListener('DOMContentLoaded', async () => { 
     try {
-        await getAuthToken(); // Coba ambil token saat load, ini akan handle jika user tidak login
+        await getAuthToken(); // Menggunakan fungsi impor
     } catch(e) {
-        // Error sudah dihandle di getAuthToken
+        // ...
     }
     
-    // Cek token lagi setelah mencoba mengambilnya
     const token = sessionStorage.getItem('firebaseIdToken');
     if (!token) {
-        // Jika tidak ada token, paksa ke Halaman Utama
          el.introView.innerHTML = `
             <div class="glass-card rounded-2xl p-8 text-center">
                 <h1 class="text-3xl md:text-4xl font-black text-white mb-4">Akses Ditolak</h1>
@@ -682,15 +587,14 @@ document.addEventListener('DOMContentLoaded', async () => { // Jadikan async
                 </a>
             </div>
         `;
-        // Pastikan hanya intro view yang tampil
         el.introView.classList.remove('hidden');
         el.academyView.classList.add('hidden');
-        lucide.createIcons(); // Jalankan icons untuk tombol close mobile menu
-        return; // Hentikan inisialisasi lebih lanjut
+        lucide.createIcons(); 
+        return; 
     }
 
     initializeSyllabus();
-    loadProgress(); // Memuat progres (index & completed) dari localStorage
+    loadProgress(); 
     el.mainTabButtons[0].classList.add('active');
 });
 

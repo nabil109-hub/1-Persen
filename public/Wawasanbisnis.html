@@ -25,42 +25,7 @@
 </head>
 <body class="text-slate-200">
 
-    <!-- Header -->
-    <header class="bg-slate-900/80 backdrop-blur-sm shadow-lg sticky top-0 z-50">
-        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Tautan diperbarui -->
-                <a href="index.html" class="flex items-center space-x-2">
-                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 34" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="text-xl font-bold text-white">1% Lebih Baik</span>
-                </a>
-                <nav class="hidden md:flex md:items-center md:space-x-8">
-                    <!-- Tautan diperbarui -->
-                    <a href="index.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-                    <a href="BerandaBisnis.html" class="text-white font-bold bg-slate-700/50 px-3 py-2 rounded-lg">Bisnis</a>
-                    <a href="BerandaKarir.html" class="text-slate-300 hover:text-sky-400 transition">Karir</a>
-                    <a href="BerandaProduktif.html" class="text-slate-300 hover:text-sky-400 transition">Produktif</a>
-                </nav>
-                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white"><i data-lucide="menu"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-40">
-        <div class="flex justify-end p-4">
-            <button id="close-mobile-menu" class="text-white"><i data-lucide="x"></i></button>
-        </div>
-        <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
-            <!-- Tautan diperbarui -->
-            <a href="index.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-            <a href="BerandaBisnis.html" class="text-2xl text-white font-bold">Bisnis</a>
-            <a href="BerandaKarir.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Karir</a>
-            <a href="BerandaProduktif.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Produktif</a>
-        </div>
-    </div>
+    <div id="nav-placeholder"></div>
 
     <main class="py-16">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,9 +35,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Main Content: Articles -->
                 <div class="md:col-span-3">
-                    <!-- Featured Article -->
                     <div class="glass-card rounded-2xl overflow-hidden mb-12 group">
                         <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop" alt="Networking event" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/1416x320/0B1120/E2E8F0?text=Placeholder+Gambar'">
                         <div class="p-8">
@@ -83,7 +46,6 @@
                         </div>
                     </div>
 
-                    <!-- Article List -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div class="glass-card rounded-2xl p-6 flex flex-col">
                             <p class="text-sky-400 text-sm font-bold mb-2">SENI PENJUALAN</p>
@@ -108,9 +70,7 @@
                     </div>
                 </div>
 
-                <!-- Sidebar -->
                 <aside class="md:col-span-1 space-y-8">
-                    <!-- Categories -->
                     <div class="glass-card rounded-2xl p-6">
                         <h3 class="text-xl font-bold text-white mb-4">Kategori</h3>
                         <ul class="space-y-3">
@@ -121,7 +81,6 @@
                         </ul>
                     </div>
 
-                    <!-- Ad Space Placeholder -->
                     <div class="glass-card rounded-2xl p-6 text-center">
                         <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">IKLAN</h4>
                         <div class="bg-slate-700/50 h-64 mt-4 rounded-lg flex items-center justify-center">
@@ -132,12 +91,8 @@
             </div>
         </div>
     </main>
-<script>
-lucide.createIcons();
 
-// --- Basic UI Setup ---
-document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('hidden'));
-document.getElementById('close-mobile-menu').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
-</script>
+<script src="layout.js"></script>
+
 </body>
 </html>

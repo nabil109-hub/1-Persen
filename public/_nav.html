@@ -1,0 +1,30 @@
+<header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <nav class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-2 text-xl font-bold text-white">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-sky-400">
+                <path d="M12 20.25V6.75M12 6.75L15.75 10.5M12 6.75L8.25 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 4.5H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>1% Lebih Baik</span>
+        </a>
+        <div class="hidden md:flex space-x-8 items-center">
+            <a href="BerandaBisnis.html" class="nav-link hover:text-sky-400 transition-colors duration-300 protected-link">Bisnis</a>
+            <a href="BerandaKarir.html" class="nav-link hover:text-sky-400 transition-colors duration-300 protected-link">Karir</a>
+            <a href="BerandaProduktif.html" class="nav-link hover:text-sky-400 transition-colors duration-300 protected-link">Produktif</a>
+            
+            <button id="login-button" class="bg-sky-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-sky-600 transition-all duration-300 shadow-lg shadow-sky-500/20">Login / Daftar</button>
+            <button id="logout-button" class="hidden bg-red-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-red-600 transition-all duration-300">Logout</button>
+        </div>
+        <button id="mobile-menu-button" class="md:hidden">
+            <i data-lucide="menu" class="h-6 w-6 text-white"></i>
+        </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 glassmorphism">
+        <a href="BerandaBisnis.html" class="block py-2 nav-link protected-link">Bisnis</a>
+        <a href="BerandaKarir.html" class="block py-2 nav-link protected-link">Karir</a>
+        <a href="BerandaProduktif.html" class="block py-2 nav-link protected-link">Produktif</a>
+        
+        <button id="mobile-login-button" class="block mt-2 w-full py-2 text-center bg-sky-500 text-white font-semibold rounded-lg">Login / Daftar</button>
+        <button id="mobile-logout-button" class="hidden mt-2 w-full py-2 text-center bg-red-500 text-white font-semibold rounded-lg">Logout</button>
+    </div>
+</header>

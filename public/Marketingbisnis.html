@@ -29,41 +29,15 @@
             list-style-type: disc;
             margin-left: 1rem;
         }
+        /* (BARU) Pastikan .hidden bekerja */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="text-slate-200">
 
-    <header class="bg-slate-900/80 backdrop-blur-sm shadow-lg sticky top-0 z-50">
-        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <a href="index.html" class="flex items-center space-x-2">
-                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 34" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="text-xl font-bold text-white">1% Lebih Baik</span>
-                </a>
-                <nav class="hidden md:flex md:items-center md:space-x-8">
-                    <a href="index.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-                    <a href="BerandaBisnis.html" class="text-white font-bold bg-slate-700/50 px-3 py-2 rounded-lg">Bisnis</a>
-                    <a href="BerandaKarir.html" class="text-slate-300 hover:text-sky-400 transition">Karir</a>
-                    <a href="BerandaProduktif.html" class="text-slate-300 hover:text-sky-400 transition">Produktif</a>
-                </nav>
-                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white"><i data-lucide="menu"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-40">
-        <div class="flex justify-end p-4">
-            <button id="close-mobile-menu" class="text-white"><i data-lucide="x"></i></button>
-        </div>
-        <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
-            <a href="index.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-            <a href="BerandaBisnis.html" class="text-2xl text-white font-bold">Bisnis</a>
-            <a href="BerandaKarir.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Karir</a>
-            <a href="BerandaProduktif.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Produktif</a>
-        </div>
-    </div>
+    <div id="nav-placeholder"></div>
 
     <main class="py-16">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,12 +92,15 @@
 
         </div>
     </main>
-<script>
-lucide.createIcons();
 
-// --- Basic UI Setup ---
-document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('hidden'));
-document.getElementById('close-mobile-menu').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
+<script src="layout.js"></script>
+
+<script type="module"> // <-- (BARU) Diubah menjadi type="module"
+// (BARU) Impor auth terpusat
+import { getAuthHeaders } from './auth.js';
+
+// (DIHAPUS) lucide.createIcons(); 
+// (DIHAPUS) Basic UI Setup (Mobile Menu)
 
 // --- Marketing Tool Logic ---
 const el = {
@@ -197,6 +174,7 @@ marketingEras.forEach(eraData => {
 lucide.createIcons(); // Re-initialize icons after adding them to the DOM
 
 // --- Gemini AI Strategist Logic ---
+const BACKEND_URL = ""; // (BARU) Didefinisikan di sini
 el.generateStrategyBtn.addEventListener('click', async () => {
     const prompt = el.aiPrompt.value.trim();
     if (!prompt) {
@@ -204,13 +182,13 @@ el.generateStrategyBtn.addEventListener('click', async () => {
         return;
     }
 
-    // *** MODIFIKASI 1: Cek Token ***
-    const token = sessionStorage.getItem('firebaseIdToken');
-    if (!token) {
-        alert("Anda harus login dulu untuk menggunakan fitur ini.");
-        // Opsional: Redirect ke halaman login
-        // window.location.href = 'index.html'; 
-        return;
+    // *** (BARU) Modifikasi 1: Cek Token ***
+    let headers;
+    try {
+         headers = await getAuthHeaders(); // Menggunakan fungsi impor
+    } catch (e) {
+         // getAuthHeaders sudah menangani alert dan redirect
+         return;
     }
 
     el.aiBtnText.classList.add('hidden');
@@ -236,17 +214,21 @@ el.generateStrategyBtn.addEventListener('click', async () => {
         const apiUrl = `${BACKEND_URL}/api/v1/generate`;
         const payload = { contents: [{ parts: [{ text: fullPrompt }] }] };
 
-        // *** MODIFIKASI 2: Tambahkan Header Authorization ***
+        // *** (BARU) Modifikasi 2: Tambahkan Header Authorization ***
         const response = await fetch(apiUrl, {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // <-- Tambahkan header ini
-            },
+            headers: headers, // <-- Gunakan header yang sudah didapat
             body: JSON.stringify(payload)
         });
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                 alert("Sesi Anda berakhir. Silakan login ulang.");
+                 window.location.href = 'index.html';
+                 return;
+             }
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
         const data = await response.json();
         let text = data.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -265,8 +247,10 @@ el.generateStrategyBtn.addEventListener('click', async () => {
 
     } catch (error) {
         console.error("Error calling Gemini API:", error);
-        el.aiOutput.innerHTML = `<p class="text-red-400">Waduh, ada gangguan teknis. Coba lagi nanti ya. Error: ${error.message}</p>`;
-        el.aiResult.classList.remove('hidden');
+         if (!(error instanceof Error && error.message.includes("Token tidak tersedia"))) {
+            el.aiOutput.innerHTML = `<p class="text-red-400">Waduh, ada gangguan teknis. Coba lagi nanti ya. Error: ${error.message}</p>`;
+            el.aiResult.classList.remove('hidden');
+         }
     } finally {
         el.aiBtnText.classList.remove('hidden');
         el.aiBtnLoader.classList.add('hidden');

@@ -12,6 +12,29 @@ const multer = require('multer');
 const pdfParse = require('pdf-parse');
 const pino = require('pino');
 
+let serviceAccount;
+try {
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    // Mode produksi (Vercel) - Ambil dari env var
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  } else {
+    // Mode lokal - Ambil dari file
+    serviceAccount = require('./serviceAccountkey.json'); 
+  }
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+  
+} catch (error) {
+  console.error("Kesalahan Inisialisasi Firebase Admin:", error.message);
+  // Jika tidak ada kunci service account lokal, log info saja
+  if (error.code === 'MODULE_NOT_FOUND' && !process.env.FIREBASE_SERVICE_ACCOUNT) {
+    console.warn("File serviceAccountkey.json tidak ditemukan. Ini wajar jika deploy di Vercel, pastikan FIREBASE_SERVICE_ACCOUNT di-set.");
+  }
+}
+// --- (AKHIR TAMBAHAN) ---
+
 // --- Inisialisasi Klien & Variabel ---
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const prisma = new PrismaClient(); // <-- PENTING
@@ -21,10 +44,22 @@ const transport = process.env.NODE_ENV === 'production'
   ? { target: 'pino-pretty', options: { colorize: true } }
   : { target: 'pino-pretty', options: { colorize: false, destination: './server.log', sync: true, mkdir: true } };
 
-const logger = pino({
-    transport: transport,
-    level: 'info'
-});
+const logger = {
+  info: (obj, msg) => {
+    if (msg) console.log(obj, msg);
+    else console.log(obj);
+  },
+  warn: (obj, msg) => {
+    if (msg) console.warn(obj, msg);
+    else console.warn(obj);
+  },
+  error: (obj, msg) => {
+    if (msg) console.error(obj, msg);
+    else console.error(obj);
+  }
+};
+// --- Akhir Perubahan Logger ---
+
 // --- Inisialisasi Express ---
 const app = express();
 

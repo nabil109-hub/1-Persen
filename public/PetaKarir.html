@@ -48,38 +48,7 @@
 </head>
 <body class="text-slate-200">
 
-    <header class="bg-slate-900/80 backdrop-blur-sm shadow-lg sticky top-0 z-50">
-        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <a href="index.html" class="flex items-center space-x-2">
-                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 34" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="text-xl font-bold text-white">1% Lebih Baik</span>
-                </a>
-                <nav class="hidden md:flex md:items-center md:space-x-8">
-                    <a href="index.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-                    <a href="BerandaBisnis.html" class="text-slate-300 hover:text-sky-400 transition">Bisnis</a>
-                    <a href="BerandaKarir.html" class="text-white font-bold bg-slate-700/50 px-3 py-2 rounded-lg">Karir</a>
-                    <a href="BerandaProduktif.html" class="text-slate-300 hover:text-sky-400 transition">Produktif</a>
-                </nav>
-                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white"><i data-lucide="menu"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-40">
-        <div class="flex justify-end p-4">
-            <button id="close-mobile-menu" class="text-white"><i data-lucide="x"></i></button>
-        </div>
-        <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
-            <a href="index.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-            <a href="BerandaBisnis.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Bisnis</a>
-            <a href="BerandaKarir.html" class="text-2xl text-white font-bold">Karir</a>
-            <a href="BerandaProduktif.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Produktif</a>
-        </div>
-    </div>
-
+    <div id="nav-placeholder"></div>
 
     <main class="py-16">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -199,44 +168,23 @@
         </div>
     </main>
 
+<script src="layout.js"></script>
+
 <script type="module">
 // ===== MULAI SCRIPT BARU =====
 
-    // --- (PERBAIKAN) Impor Firebase ---
-    // initializeApp diimpor dari 'firebase-app.js'
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    // getAuth diimpor dari 'firebase-auth.js'
-    import { getAuth } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    // (BARU) Impor dari modul auth terpusat
+    import { getAuthToken, getAuthHeaders } from './auth.js';
+    const BACKEND_URL = "";
 
-    const firebaseConfig = {
-          apiKey: "AIzaSyBZpVN-dFVngkxe6obg3hCeKyPniJb0__Y",
-          authDomain: "project-1-lebih-baik.firebaseapp.com",
-          projectId: "project-1-lebih-baik",
-          storageBucket: "project-1-lebih-baik.firebasestorage.app",
-          messagingSenderId: "153004966709",
-          appId: "1:153004966709:web:9f98e0ba16ae35b18ec27c"
-    };
-    let app;
-    try {
-        app = initializeApp(firebaseConfig);
-    } catch (e) {
-        if (window.firebase?.apps?.length) { 
-            app = window.firebase.app();
-        } else {
-             console.error("Critical Firebase Initialization Error:", e);
-        }
-    }
-    const auth = getAuth(app);
-    // --- Akhir Perbaikan Impor Firebase ---
-
+    // --- (DIHAPUS) Blok Impor Firebase lama ---
+    // --- (DIHAPUS) Blok Inisialisasi app/auth lama ---
 
     lucide.createIcons();
 
-    // --- Basic UI Setup ---
-    document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('hidden'));
-    document.getElementById('close-mobile-menu').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
+    // --- (DIHAPUS) Blok Basic UI Setup (mobile menu) lama ---
 
-    // --- Definisi Tampilan Toast ---
+    // --- (TETAP) Definisi Tampilan Toast ---
     const toastSuccess = {
         text: "✅ Data berhasil disimpan!",
         duration: 3000,
@@ -265,43 +213,10 @@
         }
     };
 
-    // --- Logika Auth & API ---
-    const BACKEND_URL = "";
-
-    async function getAuthToken() {
-        await auth.authStateReady(); 
-        const user = auth.currentUser;
-        if (!user || user.isAnonymous) {
-            Toastify({ ...toastError, text: "Anda harus login dulu untuk mengakses halaman ini." }).showToast();
-            setTimeout(() => window.location.href = "index.html", 2000); 
-            return null;
-        }
-        try {
-            const token = await user.getIdToken(true); 
-            sessionStorage.setItem('firebaseIdToken', token);
-            return token;
-        } catch (error) {
-            console.error("Gagal mendapatkan token:", error);
-            Toastify({ ...toastError, text: "Sesi Anda berakhir. Silakan login ulang." }).showToast();
-            sessionStorage.removeItem('firebaseIdToken');
-            setTimeout(() => window.location.href = 'index.html', 2000);
-            return null;
-        }
-    }
-
-    async function getAuthHeaders() {
-        const token = await getAuthToken();
-        if (!token) {
-            throw new Error("Token tidak tersedia");
-        }
-        return {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        };
-    }
+    // --- (DIHAPUS) Blok Logika Auth & API (getAuthToken, getAuthHeaders) lama ---
 
 
-    // --- Career Map Logic ---
+    // --- (TETAP) Career Map Logic ---
     const el = {
         steps: [document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3'), document.getElementById('step-4')],
         progressSteps: [document.getElementById('progress-step-1'), document.getElementById('progress-step-2'), document.getElementById('progress-step-3'), document.getElementById('progress-step-4')],
@@ -391,7 +306,7 @@
         
         console.log("Menyimpan Peta Karir ke API...", careerData);
         try {
-            const headers = await getAuthHeaders();
+            const headers = await getAuthHeaders(); // Menggunakan fungsi impor
             const response = await fetch(`${BACKEND_URL}/api/v1/career-map`, {
                 method: 'POST',
                 headers: headers,
@@ -413,7 +328,7 @@
 
     async function loadDataFromAPI() {
         try {
-            const headers = await getAuthHeaders();
+            const headers = await getAuthHeaders(); // Menggunakan fungsi impor
             const response = await fetch(`${BACKEND_URL}/api/v1/career-map`, {
                 headers: headers
             });
@@ -486,7 +401,7 @@
     }
 
 
-    // Navigation Listeners
+    // (TETAP) Navigation Listeners
     el.nextStep1.addEventListener('click', () => { 
         saveStepData(1); 
         saveDataToAPI();
@@ -519,14 +434,17 @@
     });
 
 
-    // AI Roadmap Generation
+    // (TETAP) AI Roadmap Generation
     el.generateAiRoadmapBtn.addEventListener('click', async () => {
         
-        const token = sessionStorage.getItem('firebaseIdToken');
-        if (!token) {
-            Toastify({ ...toastError, text: "Sesi Anda berakhir. Harap login ulang." }).showToast();
-            setTimeout(() => window.location.href = 'index.html', 2000); 
-            return;
+        // (Modifikasi) Cek token diganti dengan panggil getAuthHeaders()
+        let headers;
+        try {
+             headers = await getAuthHeaders();
+        } catch (e) {
+             Toastify({ ...toastError, text: "Sesi Anda berakhir. Harap login ulang." }).showToast();
+             setTimeout(() => window.location.href = 'index.html', 2000); 
+             return;
         }
 
         el.aiBtnText.classList.add('hidden');
@@ -549,10 +467,9 @@
             const apiUrl = `${BACKEND_URL}/api/v1/generate`;
             const payload = { contents: [{ parts: [{ text: prompt }] }] };
 
-            const headers = await getAuthHeaders();
             const response = await fetch(apiUrl, {
                 method: 'POST',
-                headers: headers, 
+                headers: headers, // Menggunakan headers yang sudah didapat
                 body: JSON.stringify(payload)
             });
 
@@ -597,7 +514,7 @@
     });
 
 
-    // Initial setup
+    // (TETAP) Initial setup
     document.addEventListener('DOMContentLoaded', async () => {
         try {
             await getAuthToken(); // Cek token, akan redirect jika tidak ada/invalid

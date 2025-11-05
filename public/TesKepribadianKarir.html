@@ -35,47 +35,15 @@
             color: #38bdf8; /* sky-400 */
             border-bottom-color: #38bdf8;
         }
+         /* (BARU) Pastikan .hidden bekerja */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="text-slate-200">
 
-    <!-- Header -->
-    <header class="bg-slate-900/80 backdrop-blur-sm shadow-lg sticky top-0 z-50">
-        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Tautan diperbarui -->
-                <a href="index.html" class="flex items-center space-x-2">
-                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 24L24 34" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="text-xl font-bold text-white">1% Lebih Baik</span>
-                </a>
-                <nav class="hidden md:flex md:items-center md:space-x-8">
-                    <!-- Tautan diperbarui -->
-                    <a href="index.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-                    <a href="BerandaBisnis.html" class="text-slate-300 hover:text-sky-400 transition">Bisnis</a>
-                    <a href="BerandaKarir.html" class="text-white font-bold bg-slate-700/50 px-3 py-2 rounded-lg">Karir</a>
-                    <a href="BerandaProduktif.html" class="text-slate-300 hover:text-sky-400 transition">Produktif</a>
-                </nav>
-                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-white"><i data-lucide="menu"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-40">
-        <div class="flex justify-end p-4">
-            <button id="close-mobile-menu" class="text-white"><i data-lucide="x"></i></button>
-        </div>
-        <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
-            <!-- Tautan diperbarui -->
-            <a href="index.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
-            <a href="BerandaBisnis.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Bisnis</a>
-            <a href="BerandaKarir.html" class="text-2xl text-white font-bold">Karir</a>
-            <a href="BerandaProduktif.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Produktif</a>
-        </div>
-    </div>
-
+    <div id="nav-placeholder"></div>
 
     <main class="py-16">
         <div id="assessment-center-container" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +52,6 @@
                 <p class="mt-4 text-lg text-slate-400">Kenali dirimu lebih dalam melalui 4 tes fundamental untuk merancang karir yang lebih bermakna.</p>
             </div>
 
-            <!-- Tab Navigation -->
             <div class="flex flex-wrap justify-center border-b border-slate-700 mb-8">
                 <button class="tab-button py-4 px-4 sm:px-6 text-slate-400 font-semibold border-b-2 border-transparent active" data-tab="mbti">Kepribadian (MBTI)</button>
                 <button class="tab-button py-4 px-4 sm:px-6 text-slate-400 font-semibold border-b-2 border-transparent" data-tab="riasec">Minat Karir (RIASEC)</button>
@@ -92,18 +59,14 @@
                 <button class="tab-button py-4 px-4 sm:px-6 text-slate-400 font-semibold border-b-2 border-transparent" data-tab="drivers">Penggerak Karir</button>
             </div>
             
-            <!-- Tab Content -->
             <div id="tab-content">
-                <!-- Content for each test will be injected here -->
-            </div>
+                </div>
 
         </div>
     </main>
     
-    <!-- Template for a single test -->
     <template id="test-template">
         <div class="test-container quiz-container">
-            <!-- Intro Screen -->
             <div class="intro-screen text-center">
                 <div class="glass-card p-8 md:p-12 rounded-2xl">
                     <i class="test-icon w-16 h-16 text-sky-400 mx-auto mb-6"></i>
@@ -113,7 +76,6 @@
                 </div>
             </div>
 
-            <!-- Quiz Screen -->
             <div class="quiz-screen hidden">
                 <div class="glass-card p-8 md:p-12 rounded-2xl">
                     <div class="flex justify-between items-center mb-4">
@@ -128,8 +90,7 @@
                 </div>
             </div>
 
-             <!-- Loading Screen -->
-            <div class="loading-screen hidden text-center">
+             <div class="loading-screen hidden text-center">
                  <div class="glass-card p-8 md:p-12 rounded-2xl">
                     <div class="flex justify-center items-center h-48">
                         <div class="w-12 h-12 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
@@ -138,26 +99,23 @@
                  </div>
             </div>
 
-            <!-- Result Screen -->
             <div class="result-screen hidden">
                 <div class="glass-card p-8 md:p-12 rounded-2xl">
-                    <!-- Result content will be injected here -->
-                </div>
+                    </div>
             </div>
         </div>
     </template>
+
+<script src="layout.js"></script>
 
 <script>
 // This is a large, fully functional script for all 4 assessment tests.
 
 lucide.createIcons();
 
-// --- Basic UI Setup ---
-document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('hidden'));
-document.getElementById('close-mobile-menu').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
+// --- (DIHAPUS) Basic UI Setup (Mobile Menu) ---
 
 // --- Assessment Center Logic ---
-
 const testsData = {
     mbti: {
         id: 'mbti',
@@ -204,7 +162,7 @@ const testsData = {
             'INFP': { title: 'Sang Mediator', desc: 'Sebagai seorang Mediator, kamu adalah individu yang idealis, kreatif, dan didorong oleh nilai-nilai luhur. Kamu selalu mencari kebaikan dalam diri orang lain dan ingin membuat dunia menjadi tempat yang lebih baik. Kamu mungkin terlihat pendiam, namun di dalam dirimu ada api semangat yang membara untuk hal-hal yang kamu yakini.' }, 
             'ISTJ': { title: 'Sang Logistisian', desc: 'Sebagai seorang Logistisian, kamu adalah pilar keandalan. Kamu sangat praktis, berpegang teguh pada fakta, dan memiliki integritas yang tinggi. Kamu lebih suka bekerja di lingkungan yang terstruktur dan menghargai tradisi. Orang lain bisa selalu mengandalkanmu untuk menyelesaikan pekerjaan dengan benar dan tepat waktu.' }, 
             'ENFP': { title: 'Sang Juru Kampanye', desc: 'Sebagai seorang Juru Kampanye, kamu adalah individu yang antusias, kreatif, dan sangat sosial. Kamu pandai melihat koneksi antara berbagai ide dan orang. Energimu yang meluap-luap dan sifatmu yang ramah membuatmu mudah terhubung dengan siapa saja, menginspirasi mereka untuk melihat dunia dengan cara baru.' },
-            // Add all 16 types for a complete experience
+            // ... (results lainnya)
         }
     },
     riasec: {
@@ -213,17 +171,14 @@ const testsData = {
         icon: 'grip',
         title: 'Tes Minat Karir (RIASEC)',
         description: 'Temukan tipe aktivitas yang paling kamu nikmati untuk melihat bidang pekerjaan yang paling cocok dengan minatmu.',
-        // ### KODE DIPERBAIKI DI SINI ###
         questions: Array(25).fill(0).map((_, i) => ({
             q: "Aktivitas mana yang lebih kamu nikmati?",
             a: [
-                // Opsi 1 (val tetap)
                 { text: ["Memperbaiki mesin", "Menganalisis data", "Menulis cerita", "Membantu orang lain", "Memimpin tim", "Mengatur file", "Berkebun", "Melakukan eksperimen", "Bermain musik", "Menjadi relawan", "Meyakinkan orang", "Membuat anggaran", "Membangun furnitur", "Memecahkan teka-teki logika"][i % 14], 
                   val: ["R", "I", "A", "S", "E", "C", "R", "I", "A", "S", "E", "C", "R", "I"][i % 14] },
-                // Opsi 2 (val digeser/diubah untuk perbandingan)
                 { text: ["Bekerja dengan hewan", "Menjadi programmer", "Berakting di panggung", "Memberi nasihat karir", "Menjual sebuah produk", "Memeriksa dokumen", "Mengemudikan kendaraan besar", "Meneliti sejarah", "Melukis", "Menjadi terapis", "Bernegosiasi kontrak", "Bekerja dengan spreadsheet", "Bertukang", "Mempelajari luar angkasa"][i % 14], 
-                  val: ["I", "A", "S", "E", "C", "R", "I", "A", "S", "E", "C", "R", "I", "R"][(i % 14)] } // Array 'val' yang kedua digeser
-            ].sort(() => Math.random() - 0.5) // Acak posisi opsi
+                  val: ["I", "A", "S", "E", "C", "R", "I", "A", "S", "E", "C", "R", "I", "R"][(i % 14)] } 
+            ].sort(() => Math.random() - 0.5) 
         })),
         results: { 'R': 'Realistic (Si Tukang)', 'I': 'Investigative (Si Pemikir)', 'A': 'Artistic (Si Kreator)', 'S': 'Social (Si Penolong)', 'E': 'Enterprising (Si Pembujuk)', 'C': 'Conventional (Si Organisator)' }
     },
@@ -241,7 +196,6 @@ const testsData = {
                 { q: "Dalam rapat, peranmu adalah...", a: [{ text: "Mengarahkan diskusi sesuai tujuan besar.", type: "architect" }, { text: "Memastikan semua orang didengar.", type: "connector" }, { text: "Mencatat poin-poin aksi.", type: "executor" }, { text: "Menanyakan pertanyaan kritis.", type: "analyst" }] },
             ];
             const q = baseQuestions[i % baseQuestions.length];
-            // Shuffle answers to avoid pattern recognition by user
             q.a = q.a.sort(() => Math.random() - 0.5);
             return q;
         }),
@@ -421,3 +375,4 @@ document.querySelectorAll('.test-container:not(:first-child)').forEach(c => c.cl
 </body>
 </html>
 
+modifikasi juga ini TesKepribadianKarir.html
