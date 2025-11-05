@@ -88,6 +88,22 @@
         .hidden {
             display: none;
         }
+
+        /* ===== MULAI KODE BARU: ANIMASI POP-UP ===== */
+        @keyframes pop-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .mascot-pop-in {
+            animation: pop-in 0.4s ease-out forwards;
+        }
+        /* ===== AKHIR KODE BARU ===== */
     </style>
 </head>
 <body class="text-slate-200">
@@ -261,12 +277,61 @@
         </div>
     </div>
 
-
-<script type="module"> // *** UBAH MENJADI type="module" ***
+    <div id="produktif-mascot-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[100] hidden">
+        <div id="produktif-mascot-box" class="glass-card p-8 rounded-2xl w-full max-w-md text-center relative">
+            
+            <button id="close-produktif-mascot" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+    
+            <img src="mascot-produktif.png" alt="Maskot Blue Produktif" class="w-48 h-48 mx-auto mb-4">
+    
+            <h2 class="text-4xl font-bold text-white">
+                Yuk <span class="text-sky-400">Produktif</span> Bareng Blue!
+            </h2>
+        </div>
+    </div>
+    <script type="module"> // *** UBAH MENJADI type="module" ***
     // ===== MULAI SCRIPT BARU =====
 
     // --- Initialize Lucide Icons ---
     lucide.createIcons();
+
+    // --- (BARU) Logika Mascot Produktif ---
+    const produktifOverlay = document.getElementById('produktif-mascot-overlay');
+    const produktifBox = document.getElementById('produktif-mascot-box');
+    const closeProduktifMascot = document.getElementById('close-produktif-mascot');
+    
+    // Kunci localStorage yang BARU dan UNIK
+    const storageKey = 'productiveIntroClosed'; 
+
+    if (produktifOverlay && closeProduktifMascot && produktifBox) {
+        
+        // Cek localStorage.
+        if (localStorage.getItem(storageKey) !== 'true') {
+            
+            // Tampilkan modal setelah 1 detik
+            setTimeout(() => {
+                produktifOverlay.classList.remove('hidden');
+                produktifBox.classList.add('mascot-pop-in'); // Animasi
+                lucide.createIcons(); // Render ikon 'x'
+            }, 1000); 
+        }
+
+        // Event listener untuk tombol close
+        closeProduktifMascot.addEventListener('click', () => {
+            produktifOverlay.classList.add('hidden'); 
+            localStorage.setItem(storageKey, 'true'); 
+        });
+        
+        // (Opsional) Tutup jika klik di luar box
+        produktifOverlay.addEventListener('click', (e) => {
+            if (e.target === produktifOverlay) {
+                closeProduktifMascot.click();
+            }
+        });
+    }
+    // --- (AKHIR BARU) ---
 
     // --- Section 1: DOM Element Selectors ---
     const el = {
@@ -318,7 +383,7 @@
     import { getAuth } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
     // ** Tambahkan Inisialisasi Firebase App (jika belum ada dari HalamanUtama) **
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    const firebaseConfig = { // Salin dari index.html
+    const firebaseConfig = { // Salin dari HalamanUtama.html
           apiKey: "AIzaSyBZpVN-dFVngkxe6obg3hCeKyPniJb0__Y",
           authDomain: "project-1-lebih-baik.firebaseapp.com",
           projectId: "project-1-lebih-baik",

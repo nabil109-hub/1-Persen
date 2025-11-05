@@ -25,17 +25,29 @@
         h1, h2, h3 {
             font-weight: 900;
         }
+
+        /* ===== Animasi Pop-up ===== */
+        @keyframes pop-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .mascot-pop-in {
+            animation: pop-in 0.4s ease-out forwards;
+        }
     </style>
 </head>
 <body class="text-slate-200">
 
-    <!-- Header -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <!-- Tautan diperbarui -->
                     <a href="index.html" class="flex items-center space-x-2">
                         <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -45,16 +57,13 @@
                     </a>
                 </div>
 
-                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex md:items-center md:space-x-8">
-                    <!-- Tautan diperbarui -->
                     <a href="index.html" class="text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
                     <a href="BerandaBisnis.html" class="text-slate-300 hover:text-sky-400 transition">Bisnis</a>
                     <a href="BerandaKarir.html" class="text-white font-bold bg-slate-700/50 px-3 py-2 rounded-lg">Karir</a>
                     <a href="BerandaProduktif.html" class="text-slate-300 hover:text-sky-400 transition">Produktif</a>
                 </nav>
                 
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="text-white">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -64,7 +73,6 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-40">
         <div class="flex justify-end p-4">
             <button id="close-mobile-menu" class="text-white">
@@ -72,7 +80,6 @@
             </button>
         </div>
         <div class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
-            <!-- Tautan diperbarui -->
             <a href="index.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Halaman Utama</a>
             <a href="BerandaBisnis.html" class="text-2xl text-slate-300 hover:text-sky-400 transition">Bisnis</a>
             <a href="BerandaKarir.html" class="text-2xl text-white font-bold">Karir</a>
@@ -81,10 +88,8 @@
     </div>
 
 
-    <!-- Main Content -->
     <main class="pt-20">
         <div class="max-w-8xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-            <!-- Hero Section -->
             <div class="text-center mb-24">
                  <p class="text-4xl md:text-6xl font-black text-sky-400 leading-tight mb-2">Mau Mulai Karir?</p>
                 <h1 class="text-4xl md:text-6xl font-black text-white leading-tight">
@@ -96,7 +101,6 @@
                 </p>
             </div>
 
-            <!-- Toolkit Section -->
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-black text-white">
                     The Career Growth <span class="text-sky-400">Toolkit</span>
@@ -106,10 +110,7 @@
                 </p>
             </div>
 
-            <!-- Toolkit Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Card 1: Kompas Karir -->
-                <!-- Tautan diperbarui -->
                 <a href="TesKepribadianKarir.html" class="group block p-8 rounded-2xl glass-card hover:border-sky-400 transition-all duration-300 transform hover:-translate-y-2">
                     <div class="flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 mb-6">
                         <i data-lucide="compass" class="w-8 h-8 text-sky-400"></i>
@@ -117,8 +118,6 @@
                     <h3 class="text-xl font-bold text-white mb-2">Kenali Diri Kamu</h3>
                     <p class="text-slate-400">Temukan tipe kepribadian profesionalmu lewat tes singkat ini. Dapatkan profil unik dan rekomendasi karir yang paling cocok buat kamu.</p>
                 </a>
-                <!-- Card 2: Peta Karir -->
-                <!-- Tautan diperbarui -->
                 <a href="PetaKarir.html" class="group block p-8 rounded-2xl glass-card hover:border-sky-400 transition-all duration-300 transform hover:-translate-y-2">
                     <div class="flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 mb-6">
                         <i data-lucide="map" class="w-8 h-8 text-sky-400"></i>
@@ -126,8 +125,6 @@
                     <h3 class="text-xl font-bold text-white mb-2">Peta Karir Pribadi</h3>
                     <p class="text-slate-400">Setelah tahu 'siapa' kamu, saatnya merancang 'ke mana' kamu mau pergi. Petakan tujuan karir jangka panjangmu dan identifikasi skill apa aja yang perlu diasah.</p>
                 </a>
-                <!-- Card 3: AI CV Polisher -->
-                <!-- Tautan diperbarui -->
                 <a href="AICVKarir.html" class="group block p-8 rounded-2xl glass-card hover:border-sky-400 transition-all duration-300 transform hover:-translate-y-2">
                     <div class="flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 mb-6">
                         <i data-lucide="scan-text" class="w-8 h-8 text-sky-400"></i>
@@ -135,8 +132,6 @@
                     <h3 class="text-xl font-bold text-white mb-2">AI CV Reviewer</h3>
                     <p class="text-slate-400">Kamu udah punya skill, tapi HRD nggak ngelirik? Mungkin cara nulis CV kamu yang kurang profesional. Biar AI bantu poles deskripsi kerja kamu jadi lebih menjual dan profesional.</p>
                 </a>
-                <!-- Card 4: Radar Skill -->
-                <!-- Tautan diperbarui -->
                 <a href="ImproveSkillKarir.html" class="group block p-8 rounded-2xl glass-card hover:border-sky-400 transition-all duration-300 transform hover:-translate-y-2">
                     <div class="flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 mb-6">
                         <i data-lucide="radar" class="w-8 h-8 text-sky-400"></i>
@@ -148,10 +143,8 @@
         </div>
     </main>
     
-    <!-- Footer -->
     <footer class="bg-slate-900/50 mt-16">
         <div class="max-w-8xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center text-slate-400">
-            <!-- Tautan diperbarui -->
             <a href="index.html" class="flex items-center justify-center space-x-2 mb-4">
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M24 4L4 24L24 44L44 24L24 4Z" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -168,6 +161,20 @@
         </div>
     </footer>
 
+    <div id="karir-mascot-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[100] hidden">
+        <div id="karir-mascot-box" class="glass-card p-8 rounded-2xl w-full max-w-lg text-center relative">
+            
+            <button id="close-karir-mascot" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+    
+            <img src="mascot-karir.png" alt="Maskot Blue Manager" class="w-40 h-40 mx-auto mb-4">
+    
+            <h2 class="text-4xl font-black text-white leading-tight">
+                Mau Karir Sesukses Blue Manager? <span class="text-sky-400">Gas Kan!</span>
+            </h2>
+        </div>
+    </div>
     <script>
         lucide.createIcons();
 
@@ -191,6 +198,42 @@
         closeMobileMenu.addEventListener('click', () => {
             mobileMenu.classList.add('hidden');
         });
+
+        // --- (BARU) Logika Mascot Karir ---
+        const karirOverlay = document.getElementById('karir-mascot-overlay');
+        const karirBox = document.getElementById('karir-mascot-box');
+        const closeKarirMascot = document.getElementById('close-karir-mascot');
+        
+        // Kunci localStorage yang BARU dan UNIK
+        const storageKey = 'careerIntroClosed'; 
+
+        if (karirOverlay && closeKarirMascot && karirBox) {
+            
+            // Cek localStorage.
+            if (localStorage.getItem(storageKey) !== 'true') {
+                
+                // Tampilkan modal setelah 1 detik
+                setTimeout(() => {
+                    karirOverlay.classList.remove('hidden');
+                    karirBox.classList.add('mascot-pop-in'); // Animasi
+                    lucide.createIcons(); // Render ikon 'x'
+                }, 1000); 
+            }
+
+            // Event listener untuk tombol close
+            closeKarirMascot.addEventListener('click', () => {
+                karirOverlay.classList.add('hidden'); 
+                localStorage.setItem(storageKey, 'true'); 
+            });
+            
+            // (Opsional) Tutup jika klik di luar box
+            karirOverlay.addEventListener('click', (e) => {
+                if (e.target === karirOverlay) {
+                    closeKarirMascot.click();
+                }
+            });
+        }
+        // --- (AKHIR BARU) ---
     </script>
 </body>
 </html>

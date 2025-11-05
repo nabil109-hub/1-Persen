@@ -24,14 +24,28 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(51, 65, 85, 0.3); /* slate-700 with opacity */
         }
+
+        /* ===== MULAI KODE BARU: ANIMASI POP-UP ===== */
+        @keyframes pop-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .mascot-pop-in {
+            animation: pop-in 0.4s ease-out forwards;
+        }
+        /* ===== AKHIR KODE BARU ===== */
     </style>
 </head>
 <body class="antiasaed">
 
-    <!-- HEADER -->
-     <header id="header" class="sticky top-0 left-0 right-0 z-50 glassmorphism shadow-lg">
+    <header id="header" class="sticky top-0 left-0 right-0 z-50 glassmorphism shadow-lg">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Tautan diperbarui ke index.html -->
             <a href="index.html" class="flex items-center space-x-2 text-xl font-bold text-white">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-sky-400">
                     <path d="M12 20.25V6.75M12 6.75L15.75 10.5M12 6.75L8.25 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -40,10 +54,8 @@
                 <span>1% Lebih Baik</span>
             </a>
             <div class="hidden md:flex">
-                <!-- Tautan diperbarui ke index.html -->
                 <a href="index.html" class="bg-sky-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-sky-600 transition-all duration-300">Kembali ke Beranda</a>
             </div>
-             <!-- Tautan diperbarui ke index.html -->
              <a href="index.html" class="md:hidden bg-sky-500 text-white font-semibold px-4 py-2 rounded-lg text-sm">
                 Beranda
             </a>
@@ -53,7 +65,6 @@
     <main class="py-16 md:py-24">
         <div class="container mx-auto px-6">
             
-            <!-- Judul Halaman -->
             <div class="text-center mb-16">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-white">Mulai Aja <span class="text-sky-400">Dulu</span></h1>
                 <p class="mt-4 max-w-3xl mx-auto text-lg text-slate-400">
@@ -61,10 +72,8 @@
                 </p>
             </div>
 
-            <!-- Grid 4 Tools -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
-                <!-- Tool 1: Peta Sumber Daya -->
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 flex flex-col group">
                     <div class="flex-shrink-0">
                         <i data-lucide="map" class="w-12 h-12 text-sky-400 mb-6"></i>
@@ -72,14 +81,12 @@
                         <p class="mt-3 text-slate-400 h-24">Bisnis gede itu mulainya dari apa yang udah lo punya. Pake tool ini buat ngelist semua 'harta karun' lo—skill, modal, sampe koneksi—biar jadi *game plan* yang jelas.</p>
                     </div>
                     <div class="mt-auto pt-6">
-                        <!-- Tautan diperbarui ke Petabisnis.html -->
                         <a href="Petabisnis.html" class="inline-block w-full text-center bg-sky-500 text-white font-bold px-6 py-3 rounded-lg hover:bg-sky-600 transition-colors">
                             Mulai Petakan &rarr;
                         </a>
                     </div>
                 </div>
 
-                <!-- Tool 2: Formula Penjualan -->
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 flex flex-col group">
                     <div class="flex-shrink-0">
                         <i data-lucide="magnet" class="w-12 h-12 text-sky-400 mb-6"></i>
@@ -87,14 +94,12 @@
                         <p class="mt-3 text-slate-400 h-24">Produk sebagus apapun nggak bakal laku kalo cara jualannya payah. Bongkar rahasia psikologi jualan dan cara deketin klien tanpa keliatan maksa.</p>
                     </div>
                     <div class="mt-auto pt-6">
-                        <!-- Tautan diperbarui ke Salesbisnis.html -->
                         <a href="Salesbisnis.html" class="inline-block w-full text-center bg-sky-500 text-white font-bold px-6 py-3 rounded-lg hover:bg-sky-600 transition-colors">
                             Mulai Jualan &rarr;
                         </a>
                     </div>
                 </div>
 
-                <!-- Tool 3: Mesin Pemasaran -->
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 flex flex-col group">
                     <div class="flex-shrink-0">
                         <i data-lucide="rocket" class="w-12 h-12 text-sky-400 mb-6"></i>
@@ -102,14 +107,12 @@
                         <p class="mt-3 text-slate-400 h-24">Jangan sampe strategi marketing lo basi. Di sini, lo dapet contekan evolusi marketing dari zaman baheula sampe era AI, biar lo selangkah di depan kompetitor.</p>
                     </div>
                     <div class="mt-auto pt-6">
-                       <!-- Tautan diperbarui ke Marketingbisnis.html -->
                        <a href="Marketingbisnis.html" class="inline-block w-full text-center bg-sky-500 text-white font-bold px-6 py-3 rounded-lg hover:bg-sky-600 transition-colors">
                             Mulai Pasarkan &rarr;
                         </a>
                     </div>
                 </div>
 
-                <!-- Tool 4: Wawasan & Skill Bisnis -->
                 <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 flex flex-col group">
                     <div class="flex-shrink-0">
                         <i data-lucide="brain" class="w-12 h-12 text-sky-400 mb-6"></i>
@@ -117,7 +120,6 @@
                         <p class="mt-3 text-slate-400 h-24">Kuasai skill fundamental dan dapatkan wawasan terbaru seputar dunia bisnis, mulai dari manajemen, keuangan, hingga strategi biar lo siap hadapi tantangan.</p>
                     </div>
                     <div class="mt-auto pt-6">
-                        <!-- Tautan diperbarui ke Wawasanbisnis.html -->
                         <a href="Wawasanbisnis.html" class="inline-block w-full text-center bg-sky-500 text-white font-bold px-6 py-3 rounded-lg hover:bg-sky-600 transition-colors">
                             Mulai Belajar &rarr;
                         </a>
@@ -128,10 +130,8 @@
         </div>
     </main>
 
-     <!-- FOOTER -->
-    <footer class="border-t border-slate-800 mt-10">
+     <footer class="border-t border-slate-800 mt-10">
         <div class="container mx-auto px-6 py-8 text-center text-slate-400">
-             <!-- Tautan diperbarui ke index.html -->
              <a href="index.html" class="flex items-center justify-center space-x-2 text-lg font-bold text-white mb-6">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-sky-400">
                     <path d="M12 20.25V6.75M12 6.75L15.75 10.5M12 6.75L8.25 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -144,8 +144,61 @@
         </div>
     </footer>
 
+    <div id="bisnis-mascot-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[100] hidden">
+        <div id="bisnis-mascot-box" class="glassmorphism p-8 rounded-2xl w-full max-w-md text-center relative">
+            
+            <button id="close-bisnis-mascot" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+    
+            <img src="mascot-bisnis-bingung.png" alt="Maskot Blue Bingung" class="w-40 h-40 mx-auto mb-4">
+    
+            <h2 class="text-2xl font-bold text-white">
+                Mau Mulai Bisnis Tapi Bingung Mulai Dari Mana?
+            </h2>
+            <p class="text-lg text-slate-300 mt-2">
+                Sini Blue Kasih Paham!
+            </p>
+        </div>
+    </div>
     <script>
         lucide.createIcons();
+
+        // --- (BARU) Logika Mascot Bisnis ---
+        const bisnisOverlay = document.getElementById('bisnis-mascot-overlay');
+        const bisnisBox = document.getElementById('bisnis-mascot-box');
+        const closeBisnisMascot = document.getElementById('close-bisnis-mascot');
+        
+        // Kita gunakan 'storageKey' yang baru, khusus untuk halaman ini
+        const storageKey = 'businessIntroClosed'; 
+
+        if (bisnisOverlay && closeBisnisMascot && bisnisBox) {
+            
+            // Cek localStorage. Jika belum pernah ditutup, tampilkan.
+            if (localStorage.getItem(storageKey) !== 'true') {
+                
+                // Tampilkan modal setelah 1 detik
+                setTimeout(() => {
+                    bisnisOverlay.classList.remove('hidden');
+                    bisnisBox.classList.add('mascot-pop-in'); // Terapkan animasi
+                    lucide.createIcons(); // Render ikon 'x' di tombol close
+                }, 1000); 
+            }
+
+            // Event listener untuk tombol close
+            closeBisnisMascot.addEventListener('click', () => {
+                bisnisOverlay.classList.add('hidden'); // Sembunyikan
+                localStorage.setItem(storageKey, 'true'); // Simpan pilihan
+            });
+            
+            // (Opsional) Tutup jika klik di luar box (di overlay)
+            bisnisOverlay.addEventListener('click', (e) => {
+                if (e.target === bisnisOverlay) {
+                    closeBisnisMascot.click();
+                }
+            });
+        }
+        // --- (AKHIR BARU) ---
     </script>
 </body>
 </html>

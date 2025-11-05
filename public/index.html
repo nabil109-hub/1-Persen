@@ -61,6 +61,22 @@
             display: none;
         }
 
+        /* --- (BARU) Animasi Pop-up Maskot --- */
+        @keyframes pop-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        /* Terapkan animasi saat kelas .mascot-pop-in ditambahkan */
+        .mascot-pop-in {
+            animation: pop-in 0.5s ease-out forwards;
+        }
+
     </style>
 </head>
 <body class="antialiased">
@@ -300,8 +316,51 @@
         </div>
     </div>
 
+    <div id="mascot-welcome" class="fixed bottom-6 right-6 z-50 w-64 hidden">
+        <div class="bg-white text-slate-900 p-4 rounded-xl shadow-lg relative mb-2">
+            <button id="close-mascot" class="absolute top-2 right-2 text-slate-400 hover:text-slate-900 p-0.5">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            
+            <p class="text-sm font-semibold pr-4">
+                Hai! Selamat Datang Di 1% Lebih Baik. Blue akan menemani kamu jadi lebih baik.
+            </p>
+
+            <div class="absolute left-1/2 -bottom-2 transform -translate-x-1/2">
+                <div class="w-0 h-0 
+                    border-l-[10px] border-l-transparent
+                    border-r-[10px] border-r-transparent
+                    border-t-[10px] border-t-white">
+                </div>
+            </div>
+        </div>
+
+        <img src="mascot-blue.png.png" alt="Maskot Blue" class="w-32 h-32 ml-auto">
+    </div>
     <script type="module">
         // ===== MULAI KODE <script type="module"> =====
+
+        // --- (BARU) Logika Mascot Selamat Datang ---
+        const mascotWelcome = document.getElementById('mascot-welcome');
+        const closeMascot = document.getElementById('close-mascot');
+
+        if (mascotWelcome && closeMascot) {
+            // Cek localStorage. Jika belum pernah ditutup, tampilkan.
+            if (localStorage.getItem('welcomeMascotClosed') !== 'true') {
+                // Tampilkan dengan delay 1 detik + animasi
+                setTimeout(() => {
+                    mascotWelcome.classList.remove('hidden');
+                    mascotWelcome.classList.add('mascot-pop-in'); // Tambahkan kelas animasi
+                }, 1000); // Delay 1 detik
+            }
+
+            // Tambahkan event listener untuk tombol close
+            closeMascot.addEventListener('click', () => {
+                mascotWelcome.style.display = 'none'; // Sembunyikan langsung
+                localStorage.setItem('welcomeMascotClosed', 'true'); // Simpan pilihan
+            });
+        }
+        // --- (AKHIR BARU) ---
     
         // Import fungsi Firebase (Versi 12.4.0)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
@@ -645,5 +704,6 @@
         });
 
     </script>
+    
 </body>
 </html>
